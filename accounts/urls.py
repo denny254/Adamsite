@@ -1,12 +1,13 @@
 from django.urls import path
-from .views import UserList,RegisterAPI, LoginAPI, LogoutAPI
+from .views import UserList, UserListWithID,RegisterAPI, LoginAPI, LogoutAPI
 from knox import views as Knox_views
 from .import views
 
 
 
 urlpatterns = [
-    path('api/users/<int:pk>/', UserList.as_view(), name='user-list'),
+    path('api/users/', UserList.as_view(), name='user-list'),
+    path('api/users/<int:pk>/', UserListWithID.as_view(), name='user-list'),
     path('api/login/', LoginAPI.as_view(), name='login'),
     path('api/register/', RegisterAPI.as_view(), name='register'),
 

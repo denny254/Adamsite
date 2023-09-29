@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, WriterSerializer 
+from .serializers import UserWithTokenSerializer, RegisterSerializer, WriterSerializer 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth import login, logout 
 from knox.views import LoginView as knoxLoginView 
@@ -15,10 +15,15 @@ from .models import Writers
 from rest_framework.decorators import api_view
 
 
-class UserList(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
+class UserList(generics.ListAPIView):
+    serializer_class = UserWithTokenSerializer
     queryset = User.objects.all()
-    permission_classes = [IsAuthenticated,]
+    # permission_classes = [IsAuthenticated,]
+    
+class UserListWithID(generics.RetrieveAPIView):
+    serializer_class = UserWithTokenSerializer
+    queryset = User.objects.all()
+#     # permission_classes = [IsAuthenticated,]
 
 
 
@@ -30,7 +35,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "user": UserWithTokenSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1]
         })
     

@@ -2,11 +2,22 @@ from rest_framework import serializers
 from django.contrib.auth.models import User 
 from .models import Writers 
 from datetime import datetime
+from knox.models import AuthToken
 
-class UserSerializer(serializers.ModelSerializer):
+class UserWithTokenSerializer(serializers.ModelSerializer):
+    token = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'username', 'email']
+        fields = ['id', 'username', 'email', 'token']
+
+    def get_token(self,obj):
+        try:
+            token = AuthToken.objects.get(user=obj)
+            return token.digest 
+        except AuthToken.DoesNotExist:
+            return None
+
+        
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
