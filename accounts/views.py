@@ -10,9 +10,10 @@ from knox.views import LoginView as knoxLoginView
 from knox.views import LogoutView as knoxLogoutView
 from rest_framework import status
 from knox.auth import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 from .models import Writers 
 from rest_framework.decorators import api_view
+from drf_yasg.utils import swagger_auto_schema
 
 
 class UserList(generics.ListAPIView):
@@ -29,6 +30,13 @@ class UserListWithID(generics.RetrieveAPIView):
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
+
+    @swagger_auto_schema(
+            request_body=RegisterSerializer,
+            responses={
+                201: 'User registered successfully',
+                400 : 'Invalid input',
+                })
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
