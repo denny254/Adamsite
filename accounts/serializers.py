@@ -10,12 +10,16 @@ class UserWithTokenSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'token']
 
-    def get_token(self,obj):
+    def get_token(self, obj):
         try:
-            token = AuthToken.objects.get(user=obj)
-            return token.digest 
+            token  = AuthToken.objects.filter(user=obj).first()
+            if token:
+                return token.token_key 
+            else:
+                return None 
         except AuthToken.DoesNotExist:
             return None
+     
 
         
 

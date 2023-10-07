@@ -55,13 +55,15 @@ class LoginAPI(knoxLoginView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
-
-        success_message = f"{user.email} | logged in successfully."
+        
+        token, _ = AuthToken.objects.create(user)
+        success_message = f"{user.username} | logged in successfully."
 
         response_data = {
             "success" : True,
             "message" : success_message, 
-            "user_id" : user.id
+            "user_id" : user.id,
+           
         }
         return Response(response_data, status=status.HTTP_200_OK)
         # return super(LoginAPI, self).post(request, format=None)
