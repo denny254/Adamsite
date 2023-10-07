@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User 
-from .models import Writers 
+from .models import Writers, Task, Project 
 from datetime import datetime
 from knox.models import AuthToken
 
@@ -49,4 +49,17 @@ class WriterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Writers
         fields = ['id', 'name', 'specialization', 'date', 'email', 'phone_number']
+
+class TaskSerializer(serializers.ModelSerializer):
+
+    deadline = MMDDYYYYDateField()
+    class Meta:
+        model = Task
+        fields = ['id', 'status', 'writer', 'client', 'book_balance', 'deadline']
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
 

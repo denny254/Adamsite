@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserWithTokenSerializer, RegisterSerializer, WriterSerializer 
+from .serializers import UserWithTokenSerializer, RegisterSerializer, WriterSerializer, TaskSerializer, ProjectSerializer
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth import login, logout 
 from knox.views import LoginView as knoxLoginView 
@@ -11,7 +11,7 @@ from knox.views import LogoutView as knoxLogoutView
 from rest_framework import status
 from knox.auth import TokenAuthentication
 # from rest_framework.permissions import IsAuthenticated
-from .models import Writers 
+from .models import Writers, Task, Project 
 from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
 
@@ -56,7 +56,7 @@ class LoginAPI(knoxLoginView):
         user = serializer.validated_data['user']
         login(request, user)
 
-        success_message = f"{user.username} | logged in successfully."
+        success_message = f"{user.email} | logged in successfully."
 
         response_data = {
             "success" : True,
@@ -123,6 +123,85 @@ def delete_writer(request, writer_id):
     writer.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+#CRUD for tasks
+@api_view(['GET', 'POST'])
+def task_list(request):
+    if request.method == 'GET':
+        tasks = Task.objects.all()
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = TaskSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def task_detail(request, pk):
+    try:
+        task = Task.objects.get(pk=pk)
+    except Task.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = TaskSerializer(task)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = TaskSerializer(task, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        task.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT) 
+    
+#CRUD for projects 
+@api_view(['GET', 'POST']) 
+def project_list(request):
+    if request.method == 'GET':
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = ProjectSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(attachment=request.FILES.get('projects'))
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET', 'PUT', 'DELETE'])
+def project_detail(request, pk):
+    try:
+        project = Project.objects.get(pk=pk)
+    except Project.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = ProjectSerializer(project)
+        return Response(serializer.data)
+    
+    elif request.method == 'PUT':
+        serializer = ProjectSerializer(project, data=request.data)
+        if serializer.is_valid():
+           new_attachment = request.data.get('attachment')
+           if new_attachment:
+               project.attachment.delete()
+               project.attachment = new_attachment
+           serializer.save(attachment=new_attachment)
+           return Response(serializer.data)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        project.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
