@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os 
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(ma!0=%dn(gqh@a0q*1x5-09sp&0e^+9pwidt%+0#7aat)jrjj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True 
 
-ALLOWED_HOSTS = ["localhost", 'adamsite-c8e88a6bb1a1.herokuapp.com']
-
+ALLOWED_HOSTS = []
+# "localhost", 'adamsite-c8e88a6bb1a1.herokuapp.com'
 
 # Application definition
 
@@ -38,13 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps',
 
+#third party apps 
     'rest_framework',
-    'knox',
-    'accounts',
     'rest_framework_swagger',
     'drf_yasg',
     'corsheaders',
+    "knox",
+
 ]
 
 MIDDLEWARE = [
@@ -62,6 +65,8 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
+
+
 
 ROOT_URLCONF = 'drf.urls'
 
@@ -140,11 +145,14 @@ MEDIA_URL = '/projects/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'apps.RegisterUser'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'knox.auth.TokenAuthentication',
-      
-         ]
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+}
+
+REST_KNOX = {
+    "USER_SERIALIZER": "apps.serializers.userSerializer",
+    "TOKEN_TTL": timedelta(hours=50),
 }
 
