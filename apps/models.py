@@ -7,6 +7,9 @@ from django.contrib.auth.models import (
     )
 from django.db import models
 
+
+
+
 class RegisterUserManager(BaseUserManager):
 
     def _create_user(self, email, password, first_name, last_name, phone_number, **extra_fields):
@@ -95,11 +98,13 @@ class Task(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='New')
     writer = models.CharField(max_length=255)
     client = models.CharField(max_length=255)
-    book_balance = models.DecimalField(max_digits=10, decimal_places=2)
+    book_balance = models.CharField(max_length=255)
     deadline = models.DateField()
 
     def __str__(self):
-        return  f"{self.status} - {self.writer} - {self.client}"
+        return  f"{self.status} - {self.writer} - {self.client}" 
+    
+
 
 
 class Project(models.Model):
