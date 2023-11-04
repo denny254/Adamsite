@@ -90,7 +90,7 @@ class Task(models.Model):
         ('Approved', 'Approved'),
         ('Completed', 'Completed'),
         ('Rejected', 'Rejected'),
-        ('Canceled', 'Canceled'),
+        ('Cancelled', 'Cancelled'),
         ('Revision', 'Revision'),
         ('Resubmition', 'Resubmition'),
         ('Pending', 'Pending'),
@@ -112,12 +112,12 @@ class Project(models.Model):
         ('New', 'New'),
         ('Completed', 'Completed'),
         ('Rejected', 'Rejected'),
-        ('Canceled', 'Canceled'),
+        ('Cancelled', 'Cancelled'),
         ('Revision', 'Revision'),
         ('Resubmission', 'Resubmission'),
         ('Pending', 'Pending'),
     )
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)  
     deadline = models.DateField()
     writer_assigned = models.CharField(max_length=255)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='New')
