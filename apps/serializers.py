@@ -97,12 +97,13 @@ class LoginSerializer(serializers.Serializer):
 class YYYYMMDDDateField(serializers.Field):
     def to_internal_value(self, data):
         try:
-            return datetime.strptime(data, '%Y%m%d').date()
+            return datetime.strptime(data, '%Y/%m/%d').date()
         except ValueError:
-            raise serializers.ValidationError('Invalid date format. Use mm/dd/yyyy.')
+            raise serializers.ValidationError('Invalid date format. Use yyyy/mm/dd.')
 
     def to_representation(self, value):
-        return value.strftime('%Y%m%d')
+        return value.strftime('%Y/%m/%d')
+
 
 class WriterSerializer(serializers.ModelSerializer):
 
@@ -119,8 +120,8 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = ['id', 'status', 'writer', 'client', 'book_balance', 'deadline']
 
 class ProjectSerializer(serializers.ModelSerializer):
-    
-    date = YYYYMMDDDateField() 
+
+    deadline = YYYYMMDDDateField() 
 
     class Meta:
         model = Project
