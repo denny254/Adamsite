@@ -92,7 +92,7 @@ class Task(models.Model):
         ('Rejected', 'Rejected'),
         ('Cancelled', 'Cancelled'),
         ('Revision', 'Revision'),
-        ('Resubmition', 'Resubmition'),
+        ('Resubmission', 'Resubmission'),
         ('Pending', 'Pending'),
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='New')
