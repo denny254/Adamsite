@@ -132,11 +132,17 @@ class Project(models.Model):
             old_file = self.attachment.path 
     
             if os.path.isfile(old_file):
+                print(f"Deleting old file {old_file}")
                 os.remove(old_file) 
 
     def save(self, *args, **kwargs):
         self.delete_old_file()
         super().save(*args, **kwargs) 
+        print("New file saved")
+
+    class Meta:
+        verbose_name = "Project"
+        verbose_name_plural = "Projects"
 
 
         
