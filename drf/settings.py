@@ -64,9 +64,26 @@ MIDDLEWARE = [
 ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
-    'https://www.unitysolutionstutors.com/',
-    'https://unity-solutions.vercel.app/',
+    'https://www.unitysolutionstutors.com',
+    'https://unity-solutions.vercel.app',
 ]
+# Session settings
+
+SESSION_ENGINE = "django.contrib.sessions.backends.db"  
+SESSION_COOKIE_NAME = "sessionid" 
+SESSION_COOKIE_AGE = 1209600  
+SESSION_COOKIE_SECURE = False 
+SESSION_COOKIE_HTTPONLY = True  
+SESSION_SAVE_EVERY_REQUEST = False  
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  
+
+# Set the session timeout to one year (in seconds)
+# 1 year = 365 days * 24 hours * 60 minutes * 60 seconds
+SESSION_COOKIE_AGE = 365 * 24 * 60 * 60
+
+
+
+
 
 
 
