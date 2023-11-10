@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(ma!0=%dn(gqh@a0q*1x5-09sp&0e^+9pwidt%+0#7aat)jrjj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  
+DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", 'adamsite-c8e88a6bb1a1.herokuapp.com']
+ALLOWED_HOSTS = [".vercel.app", "now.sh", "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -113,8 +113,12 @@ WSGI_APPLICATION = 'drf.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': '1AG*Aa2b*4*511F2Debc26e52g6dgCE1',
+        'HOST': 'monorail.proxy.rlwy.net',
+        'PORT': '16923',
     }
 }
 
@@ -174,4 +178,5 @@ REST_KNOX = {
     "USER_SERIALIZER": "apps.serializers.userSerializer",
     "TOKEN_TTL": timedelta(hours=5),
 }
+
 
