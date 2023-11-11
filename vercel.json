@@ -19,5 +19,10 @@
         "src": "/(.*)",
         "dest": "drf/wsgi.py"
       }
-    ]
+    ],
+    "build": {
+    "env": {
+      "APT_DEPS": "libpq-dev" 
+    }
+  }
   }
