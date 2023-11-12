@@ -63,7 +63,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://www.unitysolutionstutors.com",
     "https://unity-solutions.vercel.app",
+    
 ]
+
 # Session settings
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
@@ -149,11 +151,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "projects")
-MEDIA_URL = "/projects/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", "static")
+STATIC_URL = "/staticfiles/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -170,3 +173,10 @@ REST_KNOX = {
     "USER_SERIALIZER": "apps.serializers.userSerializer",
     "TOKEN_TTL": timedelta(hours=5),
 }
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):3\d{3}",
+    r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):5\d{3}",
+    "*"
+]
+CORS_URLS_REGEX=r"^/api/.*$"
