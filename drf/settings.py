@@ -16,7 +16,7 @@ SECRET_KEY = "django-insecure-(ma!0=%dn(gqh@a0q*1x5-09sp&0e^+9pwidt%+0#7aat)jrjj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False 
 
-ALLOWED_HOSTS = [".vercel.app", ".now.sh", "127.0.0.1", "localhost", "*"]
+ALLOWED_HOSTS = ["vercel.app", ".now.sh", "127.0.0.1", "localhost", "*"]
 
 
 # Application definition
@@ -160,8 +160,11 @@ REST_KNOX = {
     "TOKEN_TTL": timedelta(hours=5),
 }
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8000", 
+    "http://127.0.0.1:8000",
     "https://unity-solutions.vercel.app",
 ]
+CORS_ALLOWED_ORIGINS = ['*']
+
+
 
 
