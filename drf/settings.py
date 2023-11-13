@@ -171,7 +171,7 @@ REST_KNOX = {
     "TOKEN_TTL": timedelta(hours=5),
 }
 CORS_ALLOWED_ORIGINS =[
-    '*'
+    '*', 
 ]
 
 
