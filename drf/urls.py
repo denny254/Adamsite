@@ -29,6 +29,7 @@ urlpatterns = [
    path('api/', include('apps.urls')),
    #Django Jet Adm
    path('jet/', include('jet.urls', 'jet')),
+   path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
    path('admin/', admin.site.urls),
     
 ]
