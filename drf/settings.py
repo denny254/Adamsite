@@ -51,7 +51,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "corsheaders.middleware.CorsMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -169,12 +171,18 @@ REST_KNOX = {
     "TOKEN_TTL": timedelta(hours=5),
 }
 
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):3\d{3}",
-    r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):5\d{3}",
-    "*",
+CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://www.unitysolutionstutors.com",
     "https://unity-solutions.vercel.app",
 ]
-CORS_URLS_REGEX=r"^/api/.*$"
+
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):3\d{3}",
+#     r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):5\d{3}",
+#     "*"
+   
+# ]
+# CORS_URLS_REGEX=r"^/api/.*$"
+
+
