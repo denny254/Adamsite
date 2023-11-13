@@ -170,14 +170,15 @@ REST_KNOX = {
     "USER_SERIALIZER": "apps.serializers.userSerializer",
     "TOKEN_TTL": timedelta(hours=5),
 }
+CORS_ALLOWED_ORIGINS =[
+    '*'
+]
+
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):3\d{3}",
     r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):5\d{3}",
-    ".*",
-    "http://localhost:5173",
-    "https://www.unitysolutionstutors.com",
-    "https://unity-solutions.vercel.app",
+  
 ]
 
 
