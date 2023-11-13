@@ -161,8 +161,7 @@ REST_KNOX = {
 }
 CORS_ALLOWED_ORIGINS: List[str] = [
     "https://unity-solutions.vercel.app",
-    "https://unity-solutions.vercel.app/",
-    '*'
+    
     ]
 CORS_ALLOWED_ORIGIN_REGEXES: List[str] = [
     r"^(http?:\/\/)?((localhost)|(127\.0\.0\.1)):3\d{3}",
